@@ -20,9 +20,11 @@ builder.Services.AddSwaggerGen(c => {
         }
     });
 
-    var xmlFile = "DocumentingSwagger.xml";
+    var assembly = Assembly.GetExecutingAssembly();
+    var xmlFile = $"{assembly!.GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
+    if (File.Exists(xmlPath))
+        options.IncludeXmlComments(xmlPath);;
 });
 
 var app = builder.Build();
